@@ -6,16 +6,18 @@ echo "  🚀 E-Cell Bulk Mail Agent - AWS Deployment Script"
 echo "  Target Host: 13.233.76.8 | Port: 3768"
 echo "======================================================="
 
-# 1. Update packages and install Node.js 20 LTS if not present
-sudo apt-get update -y
-sudo apt-get install -y curl unzip build-essential
+# 0. Fix any broken package dependencies if present
+sudo apt-get --fix-broken install -y 2>/dev/null || true
 
-if ! command -v node &> /dev/null; then
+# 1. Check if Node.js & npm are already installed
+if ! command -v node &> /dev/null || ! command -v npm &> /dev/null; then
     echo "[1/4] Installing Node.js LTS..."
+    sudo apt-get update -y || true
+    sudo apt-get install -y curl unzip 2>/dev/null || sudo apt-get --fix-broken install -y
     curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
     sudo apt-get install -y nodejs
 else
-    echo "[1/4] Node.js is already installed: $(node -v)"
+    echo "[1/4] Node.js is already installed: $(node -v) (npm $(npm -v))"
 fi
 
 # 2. Install PM2 daemon process manager
