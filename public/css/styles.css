@@ -1309,3 +1309,659 @@ textarea.form-control {
   border-color: var(--primary) !important;
   color: var(--primary-hover) !important;
 }
+
+/* ======================================================== */
+/* COMPREHENSIVE MOBILE & TABLET RESPONSIVE STYLES          */
+/* ======================================================== */
+
+/* Safe area padding for notch / dynamic island devices */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+/* Tablet & Mobile Screens (<= 768px) */
+@media (max-width: 768px) {
+  /* Navigation Bar */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .nav-container {
+    height: auto;
+    min-height: 56px;
+    padding: 10px 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    row-gap: 10px;
+    column-gap: 8px;
+    align-items: center;
+  }
+
+  .brand {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    gap: 8px;
+  }
+
+  .brand-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .brand-title {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .brand-badge {
+    display: none; /* Hide secondary badge on mobile for compact header */
+  }
+
+  .nav-actions {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    justify-self: end;
+  }
+
+  .status-indicator {
+    padding: 5px 9px;
+    font-size: 11px;
+    border-radius: 14px;
+    max-width: 140px;
+  }
+
+  .status-indicator #smtpStatusText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 95px;
+    display: inline-block;
+  }
+
+  .nav-tabs {
+    grid-column: 1 / -1;
+    grid-row: 2 / 3;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    gap: 2px;
+  }
+
+  .nav-tab-btn {
+    flex: 1;
+    padding: 8px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    justify-content: center;
+    border-radius: 6px;
+    gap: 4px;
+    min-height: 36px;
+  }
+
+  .nav-tab-btn span {
+    font-size: 13px;
+  }
+
+  /* Layout and Container */
+  .main-content {
+    padding: 14px 12px 40px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .card {
+    padding: 16px 14px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+  }
+
+  .view-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .view-header h2 {
+    font-size: 20px;
+  }
+
+  .view-header p {
+    font-size: 13px;
+  }
+
+  .view-header-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .view-header-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Buttons */
+  .btn {
+    min-height: 42px;
+    padding: 9px 14px;
+  }
+
+  .btn-sm {
+    min-height: 36px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  /* Home Screen Hero Card */
+  .home-hero-card {
+    padding: 20px 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .home-hero-content {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+
+  .home-hero-title {
+    font-size: 19px !important;
+    line-height: 1.3;
+  }
+
+  .home-hero-sub {
+    font-size: 13px !important;
+    line-height: 1.5;
+  }
+
+  .home-hero-action {
+    width: 100%;
+  }
+
+  .home-hero-action .btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 46px;
+    font-size: 15px;
+  }
+
+  /* Quick Metrics Grid */
+  .home-quick-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .quick-stat-card {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .quick-stat-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .quick-stat-val {
+    font-size: 18px;
+  }
+
+  .quick-stat-lbl {
+    font-size: 11px;
+  }
+
+  /* Stepper Bar */
+  .workflow-stepper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    justify-content: flex-start;
+    gap: 6px;
+    scrollbar-width: none;
+    border-radius: 10px;
+  }
+
+  .workflow-stepper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .step-item {
+    flex-shrink: 0;
+    gap: 6px;
+  }
+
+  .step-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .step-text {
+    font-size: 12px;
+  }
+
+  .step-divider {
+    min-width: 12px;
+    max-width: 24px;
+    flex: none;
+    margin: 0 4px;
+  }
+
+  /* Step 1: Sender Selection */
+  .step-card-title {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .step-header-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .step-header-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sender-accounts-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .sender-account-card {
+    padding: 12px 14px;
+  }
+
+  .sender-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .sender-name {
+    font-size: 13px;
+  }
+
+  .sender-email {
+    font-size: 12px;
+  }
+
+  /* Step 2: Template Selection Box */
+  .selected-template-box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .selected-template-box > div:first-child {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .selected-template-box .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Step 3: Recipient List & Source Tabs */
+  .recipient-source-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    gap: 6px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .recipient-source-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .source-tab-btn {
+    flex-shrink: 0;
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  .dropzone {
+    padding: 20px 14px;
+  }
+
+  .dropzone-icon {
+    font-size: 26px;
+  }
+
+  .dropzone-text {
+    font-size: 13px;
+  }
+
+  .dropzone-subtext {
+    font-size: 11px;
+  }
+
+  .manual-email-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .manual-email-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #keywordMappingGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .recipient-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .recipient-list-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Step 4: Swipe Preview & Editor */
+  .swipe-preview-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .swipe-nav-controls {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .swipe-nav-controls .btn-swipe-prev,
+  .swipe-nav-controls .btn-swipe-next {
+    flex: 1;
+    justify-content: center;
+    font-size: 13px;
+    padding: 10px 12px;
+    min-height: 42px;
+  }
+
+  .swipe-preview-banner {
+    padding: 12px 14px !important;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .swipe-preview-banner-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .swipe-preview-banner-actions label,
+  .swipe-preview-banner-actions button {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .swipe-subject-box {
+    padding: 12px 14px !important;
+  }
+
+  .swipe-subject-row {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  .swipe-subject-row input {
+    width: 100% !important;
+  }
+
+  .swipe-viewport-container {
+    height: 380px !important;
+  }
+
+  .swipe-footer {
+    padding: 12px 14px !important;
+  }
+
+  .swipe-footer-hint {
+    text-align: center;
+    font-size: 12px;
+  }
+
+  /* Universal Step Footer Buttons */
+  .step-footer-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+    align-items: stretch !important;
+  }
+
+  .step-footer-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Step 5: Dispatch & Progress */
+  .dispatch-completed-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dispatch-completed-actions .btn {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  .terminal {
+    height: 180px;
+    font-size: 11px;
+    padding: 12px;
+  }
+
+  /* Templates Screen */
+  .template-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* History Screen */
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  /* Profile Screen */
+  .profile-card {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 20px 16px;
+    gap: 12px;
+  }
+
+  .profile-avatar {
+    width: 58px;
+    height: 58px;
+    font-size: 20px;
+  }
+
+  .profile-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-badges {
+    justify-content: center;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Modals */
+  .modal-backdrop {
+    padding: 10px 8px;
+    align-items: flex-end; /* Mobile bottom sheet / responsive modal */
+  }
+
+  .modal-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 92vh !important;
+    border-radius: 16px 16px 8px 8px !important;
+  }
+
+  .modal-header {
+    padding: 14px 16px;
+  }
+
+  .modal-title {
+    font-size: 16px;
+  }
+
+  .modal-body {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .modal-footer {
+    padding: 12px 16px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #simpleHeaderInputs {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #selectionKeywordPopup,
+  #inlineKeywordPrompt {
+    position: static !important;
+    width: 100%;
+    margin-top: 8px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+  }
+
+  /* Floating Toasts */
+  #toastContainer {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .toast {
+    min-width: unset;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+}
+
+/* Extra Small Phones (<= 480px) */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 8px 10px;
+  }
+
+  .nav-tab-btn {
+    font-size: 11px;
+    padding: 6px 2px;
+  }
+
+  .nav-tab-btn span {
+    font-size: 12px;
+  }
+
+  .home-quick-stats {
+    gap: 8px;
+  }
+
+  .quick-stat-card {
+    padding: 10px 10px;
+    gap: 8px;
+  }
+
+  .quick-stat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .quick-stat-val {
+    font-size: 16px;
+  }
+
+  .quick-stat-lbl {
+    font-size: 10px;
+  }
+
+  .step-text {
+    display: none; /* Only show numbered circles on extra narrow devices */
+  }
+
+  .step-circle {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  .stat-box .stat-val {
+    font-size: 18px;
+  }
+
+  .stat-box .stat-lbl {
+    font-size: 10px;
+  }
+}
+
