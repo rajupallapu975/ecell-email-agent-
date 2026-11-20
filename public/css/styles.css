@@ -1324,6 +1324,16 @@ textarea.form-control {
 
 /* Tablet & Mobile Screens (<= 768px) */
 @media (max-width: 768px) {
+  /* Hide verbose text and guidelines on mobile to keep interface clean & action-oriented */
+  .mobile-hide {
+    display: none !important;
+  }
+
+  /* Prevent text overlapping and overflow on all mobile elements */
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
   /* Navigation Bar */
   .navbar {
     position: sticky;

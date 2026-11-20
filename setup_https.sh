@@ -12,29 +12,34 @@ echo "--> Installing Certbot & Nginx plugin..."
 sudo apt-get update -y
 sudo apt-get install -y certbot python3-certbot-nginx nginx
 
-# 2. Pull latest code from GitHub
-PROJECT_DIR=""
-if [ -d "$HOME/ecell-email-agent-" ]; then
-  PROJECT_DIR="$HOME/ecell-email-agent-"
-elif [ -d "/home/ubuntu/ecell-email-agent-" ]; then
-  PROJECT_DIR="/home/ubuntu/ecell-email-agent-"
+# 2. Update code from GitHub
+if [ ! -d "$HOME/ecell-email-agent-/.git" ]; then
+  git clone https://github.com/rajupallapu975/ecell-email-agent-.git "$HOME/ecell-email-agent-"
 fi
 
-if [ -n "$PROJECT_DIR" ]; then
-  echo "--> Pulling latest code in $PROJECT_DIR..."
-  cd "$PROJECT_DIR"
-  git pull origin main || true
-  
-  # Configure Node to internal port 3000 so Nginx can proxy to it
-  if [ -f .env ]; then
-    sed -i 's/^PORT=.*/PORT=3000/' .env
-    sed -i 's|^GOOGLE_REDIRECT_URI=.*|GOOGLE_REDIRECT_URI=https://email-agent.duckdns.org/api/auth/google/callback|' .env
-  else
-    echo "PORT=3000" >> .env
-    echo "GOOGLE_REDIRECT_URI=https://email-agent.duckdns.org/api/auth/google/callback" >> .env
+cd "$HOME/ecell-email-agent-"
+git fetch origin main
+git reset --hard origin/main
+
+# Sync to ~/ecell_agent if present
+for dir in "$HOME/ecell_agent" "/home/ubuntu/ecell_agent"; do
+  if [ -d "$dir" ]; then
+    echo "Syncing updated public assets to $dir..."
+    cp -r "$HOME/ecell-email-agent-/public" "$dir/"
+    cp -r "$HOME/ecell-email-agent-/server" "$dir/" 2>/dev/null || true
   fi
-  pm2 restart ecell-agent --update-env || pm2 start server/index.js --name ecell-agent
+done
+
+# Configure Node to internal port 3000 so Nginx can proxy to it
+if [ -f .env ]; then
+  sed -i 's/^PORT=.*/PORT=3000/' .env
+  sed -i 's|^GOOGLE_REDIRECT_URI=.*|GOOGLE_REDIRECT_URI=https://email-agent.duckdns.org/api/auth/google/callback|' .env
+elif [ -f "$HOME/ecell_agent/.env" ]; then
+  sed -i 's/^PORT=.*/PORT=3000/' "$HOME/ecell_agent/.env"
+  sed -i 's|^GOOGLE_REDIRECT_URI=.*|GOOGLE_REDIRECT_URI=https://email-agent.duckdns.org/api/auth/google/callback|' "$HOME/ecell_agent/.env"
 fi
+
+pm2 restart all || true
 
 # 3. Request SSL certificate via Certbot
 echo "--> Requesting SSL certificate from Let's Encrypt for $DOMAIN..."
@@ -77,8 +82,7 @@ sudo systemctl reload nginx
 
 echo ""
 echo "=========================================================="
-echo "✅ HTTPS IS NOW FULLY ACTIVE!"
-echo "Open your browser on mobile or desktop:"
+echo "✅ HTTPS IS FULLY CONFIGURED!"
+echo "Open in your browser on phone or PC:"
 echo "👉 https://email-agent.duckdns.org"
-echo "👉 https://email-agent.duckdns.org:3768"
 echo "=========================================================="

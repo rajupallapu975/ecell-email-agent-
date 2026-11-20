@@ -60,7 +60,7 @@
         <div class="home-hero-content" style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
           <div>
             <h1 class="home-hero-title" style="font-size: 24px; font-weight: 700; margin-bottom: 6px;">Bulk Outreach & Gmail Dispatcher</h1>
-            <p class="home-hero-sub" style="opacity: 0.9; font-size: 14px; max-width: 650px;">
+            <p class="home-hero-sub mobile-hide" style="opacity: 0.9; font-size: 14px; max-width: 650px;">
               Connect your Gmail account, select an outreach template, manage your recipient list, and preview personalized emails for every recipient with live navigation before dispatch.
             </p>
           </div>
@@ -111,22 +111,22 @@
         <div class="workflow-stepper">
           <div class="step-item active" data-step="1">
             <div class="step-circle">1</div>
-            <div class="step-text">Sender Email</div>
+            <div class="step-text">Sender</div>
           </div>
           <div class="step-divider"></div>
           <div class="step-item" data-step="2">
             <div class="step-circle">2</div>
-            <div class="step-text">Select Template</div>
+            <div class="step-text">Template</div>
           </div>
           <div class="step-divider"></div>
           <div class="step-item" data-step="3">
             <div class="step-circle">3</div>
-            <div class="step-text">Recipient List</div>
+            <div class="step-text">Recipients</div>
           </div>
           <div class="step-divider"></div>
           <div class="step-item" data-step="4">
             <div class="step-circle">4</div>
-            <div class="step-text">Preview & Next</div>
+            <div class="step-text">Preview</div>
           </div>
           <div class="step-divider"></div>
           <div class="step-item" data-step="5">
@@ -146,15 +146,15 @@
               </div>
               <div class="step-header-actions" style="display: flex; gap: 8px; flex-wrap: wrap;">
                 <button class="btn btn-outline btn-sm" id="btnConnectGoogleAccount">
-                  <span>➕</span> Google OAuth Sign-in
+                  <span>➕</span> Google Sign-in
                 </button>
                 <button class="btn btn-primary btn-sm" id="btnOpenAppPasswordModal" style="background: #1e40af; border-color: #1e3a8a; font-weight: 600;">
-                  <span>🔑</span> Connect via App Password (For Vishnu / College Accounts)
+                  <span>🔑</span> App Password (College)
                 </button>
               </div>
             </div>
             
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            <p class="mobile-hide" style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
               Select the authorized account from which all emails in this outreach will be dispatched. Institutional accounts (<code>@vishnu.edu.in</code>) work best with a Google App Password.
             </p>
 
@@ -164,15 +164,15 @@
 
             <div id="noAccountsWarning" style="display: none; padding: 20px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; text-align: center; margin-bottom: 20px;">
               <div style="font-size: 14px; font-weight: 600; color: #92400e; margin-bottom: 6px;">No sender accounts connected yet</div>
-              <div style="font-size: 12px; color: #b45309; margin-bottom: 14px;">
+              <div class="mobile-hide" style="font-size: 12px; color: #b45309; margin-bottom: 14px;">
                 Connect your Google Account via Google Sign-in or use a 16-character Google App Password (recommended for college accounts).
               </div>
               <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                 <button class="btn btn-outline btn-sm" id="btnConnectGoogleAccountPrompt">
-                  <span>➕</span> Google OAuth Sign-in
+                  <span>➕</span> Google Sign-in
                 </button>
                 <button class="btn btn-primary btn-sm" id="btnOpenAppPasswordModalPrompt" style="background: #1e40af; border-color: #1e3a8a;">
-                  <span>🔑</span> Connect via App Password
+                  <span>🔑</span> App Password
                 </button>
               </div>
             </div>
@@ -200,7 +200,7 @@
               </div>
             </div>
 
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            <p class="mobile-hide" style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
               Click the section below to open the template selection interface and choose the template for your email composition.
             </p>
 
@@ -210,7 +210,7 @@
                 <div style="font-size: 32px;" id="selectedTemplateIcon">📄</div>
                 <div>
                   <div style="font-size: 16px; font-weight: 700; color: #0f172a;" id="selectedTemplateNameDisplay">Click here to select an email template</div>
-                  <div style="font-size: 13px; color: var(--text-muted); margin-top: 2px;" id="selectedTemplateDescDisplay">Browse available templates in the application</div>
+                  <div class="mobile-hide" style="font-size: 13px; color: var(--text-muted); margin-top: 2px;" id="selectedTemplateDescDisplay">Browse available templates in the application</div>
                   <div style="margin-top: 6px; display: flex; gap: 6px;" id="selectedTemplateVariablesPills"></div>
                 </div>
               </div>
@@ -257,13 +257,13 @@
             <!-- Source Tabs: Outside, In-App, Associated -->
             <div class="recipient-source-tabs">
               <button class="source-tab-btn active" data-source="outside">
-                <span>📁</span> Outside Emails (CSV / Excel / Paste)
+                <span>📁</span> Outside File (CSV/Excel)
               </button>
               <button class="source-tab-btn" data-source="inapp">
-                <span>📥</span> Received in Application
+                <span>📥</span> In-App Leads
               </button>
               <button class="source-tab-btn" data-source="associated">
-                <span>🔗</span> Associated with Specific Address
+                <span>🔗</span> Filter Domain
               </button>
             </div>
 
@@ -272,14 +272,14 @@
               <div class="dropzone" id="workflowRecipientDropzone" style="margin-bottom: 16px;">
                 <input type="file" id="workflowRecipientFileInput" accept=".csv,.xlsx,.xls,.txt">
                 <div class="dropzone-icon">📊</div>
-                <div class="dropzone-text">Drop your CSV / Excel recipient file here</div>
-                <div class="dropzone-subtext">Must contain an 'email' column. Columns like name, company become personalization tags.</div>
+                <div class="dropzone-text">Tap or drop your CSV / Excel recipient file here</div>
+                <div class="dropzone-subtext mobile-hide">Must contain an 'email' column. Columns like name, company become personalization tags.</div>
               </div>
               
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 12px; color: var(--text-muted);">Or paste comma/newline separated emails:</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <span class="mobile-hide" style="font-size: 12px; color: var(--text-muted);">Or paste comma/newline separated emails:</span>
                 <button class="btn btn-outline btn-sm" id="btnLoad5SampleWorkflow">
-                  <span>⚡</span> Load 5 Sample Contacts
+                  <span>⚡</span> Load 5 Samples
                 </button>
               </div>
 
@@ -331,7 +331,7 @@
                   </button>
                 </div>
               </div>
-              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+              <p class="mobile-hide" style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
                 Your template contains bracket keywords. Below, verify or choose which column from your entered details fills into each keyword:
               </p>
               <div id="keywordMappingGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px;">
@@ -343,13 +343,13 @@
             <div style="margin-top: 20px;">
               <div class="recipient-list-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 8px;">
                 <div style="font-size: 14px; font-weight: 700; color: #0f172a;">
-                  Complete Recipient List Preview (<span id="completeListCount">0</span>)
+                  Recipient List Preview (<span id="completeListCount">0</span>)
                 </div>
                 <button class="btn btn-outline btn-sm" id="btnClearWorkflowRecipients" style="color: var(--danger); border-color: #fca5a5;">
                   <span>🗑️</span> Clear List
                 </button>
               </div>
-              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+              <div class="mobile-hide" style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
                 💡 <em>Tip: Click <strong>✏️ Edit</strong> or double-click any row to customize that recipient's email address or template keywords before dispatch.</em>
               </div>
 
@@ -420,8 +420,8 @@
               <div class="swipe-preview-banner-left" style="display: flex; align-items: center; gap: 8px;">
                 <span style="font-size: 16px;">✏️</span>
                 <div>
-                  <span style="font-weight: 700; font-size: 13px; color: #1e40af;">Direct Preview Editor:</span>
-                  <span style="font-size: 12px; color: #2563eb; margin-left: 4px;">Click anywhere in the subject or email body to change any word or line.</span>
+                  <span style="font-weight: 700; font-size: 13px; color: #1e40af;">Direct Preview Editor</span>
+                  <span class="mobile-hide" style="font-size: 12px; color: #2563eb; margin-left: 4px;">Click anywhere in the subject or email body to change any word or line.</span>
                 </div>
               </div>
               <div class="swipe-preview-banner-actions" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
@@ -429,13 +429,13 @@
                   <input type="checkbox" id="step4SignatureToggle" checked> ✍️ Attach Signature
                 </label>
                 <span id="previewEditScopeBadge" style="display: none; background: #fef3c7; color: #92400e; font-weight: 600; padding: 4px 10px; border-radius: 12px; font-size: 11px; border: 1px solid #fde68a;">
-                  👤 This recipient only
+                  👤 This recipient
                 </span>
                 <button type="button" id="btnApplyToCurrentRecipient" class="btn btn-outline btn-sm" style="font-size: 12px; font-weight: 600; padding: 5px 12px; color: #1e40af; border-color: #93c5fd; background: #ffffff;" title="Apply changes only to this individual recipient">
-                  👤 Apply to this recipient only
+                  👤 This recipient only
                 </button>
                 <button type="button" id="btnApplyToAllRecipients" class="btn btn-primary btn-sm" style="font-size: 12px; font-weight: 700; padding: 5px 14px; background: #4f46e5; border-color: #4338ca; color: #ffffff;" title="Apply this edited word/line across all recipients">
-                  🌐 Apply to ALL recipients
+                  🌐 Apply to ALL
                 </button>
               </div>
             </div>
@@ -443,12 +443,12 @@
             <!-- Preview Subject & Sender Info -->
             <div class="swipe-subject-box" style="padding: 14px 24px; background: #ffffff; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px;">
               <div style="font-size: 13px; display: flex; align-items: center; gap: 8px;">
-                <span style="color: var(--text-muted); font-weight: 600; min-width: 65px;">From:</span>
+                <span style="color: var(--text-muted); font-weight: 600; min-width: 50px;">From:</span>
                 <span id="previewSenderAccountText" style="color: #0f172a; font-weight: 600;">selected@gmail.com</span>
               </div>
               <div class="swipe-subject-row" style="display: flex; align-items: center; gap: 8px;">
-                <label for="swipeSubjectInput" style="color: var(--text-muted); font-weight: 600; min-width: 65px; margin: 0; cursor: pointer;">Subject:</label>
-                <input type="text" id="swipeSubjectInput" class="form-control" style="font-weight: 700; font-size: 14px; color: #0f172a; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 12px; width: 100%; transition: border-color 0.2s;" placeholder="Subject line for this recipient (click to edit directly)..." title="Click to edit subject line directly">
+                <label for="swipeSubjectInput" style="color: var(--text-muted); font-weight: 600; min-width: 50px; margin: 0; cursor: pointer;">Subject:</label>
+                <input type="text" id="swipeSubjectInput" class="form-control" style="font-weight: 700; font-size: 14px; color: #0f172a; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 12px; width: 100%; transition: border-color 0.2s;" placeholder="Subject line for this recipient..." title="Click to edit subject line directly">
                 <span id="swipeSubjectDisplay" style="display: none;"></span>
               </div>
             </div>
@@ -461,7 +461,7 @@
             <!-- Bottom Action Footer -->
             <div class="step-footer-actions swipe-footer" style="padding: 16px 24px; background: #f8fafc; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
               <button class="btn btn-outline" id="btnStep4Back">◀ Back to Recipients</button>
-              <div class="swipe-footer-hint" style="font-size: 13px; color: var(--text-muted);">
+              <div class="swipe-footer-hint mobile-hide" style="font-size: 13px; color: var(--text-muted);">
                 Preview all recipients to enable final sending
               </div>
               <button class="btn btn-success" id="btnLaunchSendMailsFinal" style="display: none; padding: 10px 24px; font-weight: 700;">
@@ -536,14 +536,14 @@
       <div class="view-header">
         <div>
           <h2>Template Screen</h2>
-          <p>Upload HTML / text email templates, customize placeholders, or create new responsive designs.</p>
+          <p class="mobile-hide">Upload HTML / text email templates, customize placeholders, or create new responsive designs.</p>
         </div>
         <div class="view-header-actions" style="display: flex; gap: 12px; flex-wrap: wrap;">
           <button class="btn btn-secondary" id="btnOpenUploadModal">
-            <span>📤</span> Upload Template File
+            <span>📤</span> Upload Template
           </button>
           <button class="btn btn-primary" id="btnOpenCreateModal">
-            <span>➕</span> Create New Template
+            <span>➕</span> Create Template
           </button>
         </div>
       </div>
@@ -552,8 +552,8 @@
       <div class="dropzone" id="templateLibraryDropzone" style="margin-bottom: 24px;">
         <input type="file" id="templateLibraryFileInput" accept=".html,.htm,.txt">
         <div class="dropzone-icon">📄</div>
-        <div class="dropzone-text">Drag & drop your HTML or TXT template file here to upload</div>
-        <div class="dropzone-subtext">Automatically detects tags like {{name}}, {{company}}, {{email}}</div>
+        <div class="dropzone-text">Tap or drop your HTML/TXT template file here</div>
+        <div class="dropzone-subtext mobile-hide">Automatically detects tags like {{name}}, {{company}}, {{email}}</div>
       </div>
 
       <!-- Templates Grid -->
@@ -569,10 +569,10 @@
       <div class="view-header">
         <div>
           <h2>History Screen</h2>
-          <p>Review past sent campaigns, recipient counts, and delivery analytics.</p>
+          <p class="mobile-hide">Review past sent campaigns, recipient counts, and delivery analytics.</p>
         </div>
         <button class="btn btn-outline btn-sm" id="btnClearHistoryBtn" style="color: var(--danger); border-color: #fca5a5;">
-          <span>🗑️</span> Clear All History
+          <span>🗑️</span> Clear History
         </button>
       </div>
 
@@ -609,10 +609,10 @@
       <div class="view-header">
         <div>
           <h2>Profile Screen</h2>
-          <p>Manage your sender identity, Google OAuth 2.0 configuration, and connected Gmail accounts.</p>
+          <p class="mobile-hide">Manage your sender identity, Google OAuth 2.0 configuration, and connected Gmail accounts.</p>
         </div>
         <button class="btn btn-primary" id="btnSaveProfile">
-          <span>💾</span> Save Profile & Credentials
+          <span>💾</span> Save Profile
         </button>
       </div>
 
@@ -621,10 +621,10 @@
         <div class="profile-avatar" id="profileAvatarCircle">EC</div>
         <div class="profile-meta">
           <h3 id="profileDisplayHeading">E-Cell Outreach Team</h3>
-          <p id="profileDisplaySub">Entrepreneurship Cell • team@ecell.org</p>
+          <p id="profileDisplaySub">team@ecell.org</p>
           <div class="profile-badges">
             <span class="badge badge-info" id="profileBadgeRole">Outreach Lead</span>
-            <span class="badge badge-success" id="profileBadgeProvider">Gmail API Active</span>
+            <span class="badge badge-success" id="profileBadgeProvider">Gmail Active</span>
           </div>
         </div>
       </div>
@@ -665,7 +665,7 @@
         <div class="card">
           <div class="card-title">Google OAuth 2.0 Credentials (Gmail API)</div>
           
-          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+          <p class="mobile-hide" style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
             Required to connect Gmail accounts via OAuth with scope <code>https://www.googleapis.com/auth/gmail.send</code>.
           </p>
 
@@ -698,10 +698,10 @@
               <div style="font-size: 13px; font-weight: 700; color: #0f172a;">Firebase Database Setup</div>
               <span class="badge badge-info" id="firebaseStatusBadge">Local Datastore Active</span>
             </div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+            <p class="mobile-hide" style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
               Upload your <code>serviceAccountKey.json</code> file or paste the JSON below to connect Firebase Firestore.
             </p>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
               <input type="file" id="firebaseServiceAccountFileInput" accept=".json" style="font-size: 12px;">
               <button class="btn btn-secondary btn-sm" id="btnUploadServiceAccount">Upload Key</button>
             </div>
@@ -713,14 +713,14 @@
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="font-size: 20px;">✍️</span>
-              <div class="card-title" style="margin-bottom: 0;">Default Gmail Signature (Auto-Synced from Sender Mail)</div>
+              <div class="card-title" style="margin-bottom: 0;">Default Gmail Signature</div>
             </div>
             <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: #166534; background: #dcfce7; padding: 6px 14px; border-radius: 20px; border: 1px solid #bbf7d0; cursor: pointer;">
-              <input type="checkbox" id="profileIncludeSignatureToggle" checked> Automatically apply sender's default Gmail signature
+              <input type="checkbox" id="profileIncludeSignatureToggle" checked> Auto-apply Gmail signature
             </label>
           </div>
 
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          <p class="mobile-hide" style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
             Instead of manual images, E-Cell Mail Agent directly retrieves the <strong>official default signature</strong> configured in your sender Gmail account (including logos, credentials, and social links), and applies it automatically to every outgoing email.
           </p>
 
