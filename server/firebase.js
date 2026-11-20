@@ -1,5 +1,10 @@
 const { initializeApp, cert, getApps } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
+let getFirestore = null;
+try {
+  getFirestore = require('firebase-admin/firestore').getFirestore;
+} catch (e) {
+  console.warn('⚠️ @google-cloud/firestore not installed, fallback to local database mode.');
+}
 const fs = require('fs');
 const path = require('path');
 
@@ -66,10 +71,14 @@ function initFirebase() {
           credential: cert(serviceAccount)
         });
       }
-      firestore = getFirestore();
-      isFirebaseActive = true;
-      console.log('🔥 Firebase Admin initialized successfully with serviceAccountKey!');
-      return firestore;
+      if (typeof getFirestore === 'function') {
+        firestore = getFirestore();
+        isFirebaseActive = true;
+        console.log('🔥 Firebase Admin initialized successfully with serviceAccountKey!');
+        return firestore;
+      } else {
+        console.log('📁 Firestore client library not present, using local database mode.');
+      }
     } catch (err) {
       console.warn('⚠️ Firebase init failed from serviceAccount file, using local database mode:', err.message);
     }
