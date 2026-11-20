@@ -1,0 +1,16 @@
+{
+  "provider": "gmail",
+  "host": "smtp.gmail.com",
+  "port": 587,
+  "secure": false,
+  "user": "rajupallapu975@gmail.com",
+  "pass": "",
+  "fromName": "Raju Pallapu",
+  "fromEmail": "rajupallapu975@gmail.com",
+  "replyTo": "",
+  "organization": "Vishnu Institute Of Technology",
+  "role": "PR & HR Lead, E-cell",
+  "rateLimitMs": 1000,
+  "includeSignature": true,
+  "signatureImagePath": "/assets/signature.png"
+}

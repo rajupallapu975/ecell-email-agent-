@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Cell Mail Agent | Personalized Outreach</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar: 4 Core Screens -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand" data-tab-nav="homeView">
+        <div class="brand-icon">✉️</div>
+        <div>
+          <span class="brand-title">E-Cell Mail Agent</span>
+          <span class="brand-badge">Gmail & Bulk Dispatch</span>
+        </div>
+      </a>
+
+      <!-- 4 Requested Screens: Home, Templates, History, Profile -->
+      <nav class="nav-tabs">
+        <button class="nav-tab-btn active" data-tab="homeView">
+          <span>🏠</span> Home
+        </button>
+        <button class="nav-tab-btn" data-tab="templatesView">
+          <span>📄</span> Templates
+        </button>
+        <button class="nav-tab-btn" data-tab="historyView">
+          <span>📊</span> History
+        </button>
+        <button class="nav-tab-btn" data-tab="profileView">
+          <span>👤</span> Profile
+        </button>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="status-indicator" id="smtpStatusBadge" title="Manage Connected Gmail Accounts & Profile">
+          <span class="status-dot sim" id="smtpStatusDot"></span>
+          <span id="smtpStatusText">Select Sender</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- ======================================================== -->
+    <!-- 1. HOME SCREEN (Send Mails Hub)                          -->
+    <!-- ======================================================== -->
+    <section id="homeView" class="tab-pane active">
+
+      <!-- Home Hero Banner with Prominent Send Mails Button -->
+      <div class="card" style="background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%); color: white; padding: 28px 32px; border: none; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: gap: 20px;">
+          <div>
+            <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 6px;">Bulk Outreach & Gmail Dispatcher</h1>
+            <p style="opacity: 0.9; font-size: 14px; max-width: 650px;">
+              Connect your Gmail account, select an outreach template, manage your recipient list, and preview personalized emails for every recipient with live navigation before dispatch.
+            </p>
+          </div>
+          <div>
+            <button class="btn btn-lg" id="btnStartSendMails" style="background: #ffffff; color: #4338ca; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.2); white-space: nowrap;">
+              <span>🚀</span> Send Mails
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Bar -->
+      <div class="home-quick-stats">
+        <div class="quick-stat-card">
+          <div class="quick-stat-icon">👤</div>
+          <div>
+            <div class="quick-stat-val" id="homeStatAccounts">0</div>
+            <div class="quick-stat-lbl">Connected Gmails</div>
+          </div>
+        </div>
+        <div class="quick-stat-card">
+          <div class="quick-stat-icon">📄</div>
+          <div>
+            <div class="quick-stat-val" id="homeStatTemplates">2</div>
+            <div class="quick-stat-lbl">Email Templates</div>
+          </div>
+        </div>
+        <div class="quick-stat-card">
+          <div class="quick-stat-icon">📨</div>
+          <div>
+            <div class="quick-stat-val" id="homeStatDelivered">0</div>
+            <div class="quick-stat-lbl">Emails Sent</div>
+          </div>
+        </div>
+        <div class="quick-stat-card">
+          <div class="quick-stat-icon">🚀</div>
+          <div>
+            <div class="quick-stat-val" id="homeStatCampaigns">0</div>
+            <div class="quick-stat-lbl">Past Campaigns</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Send Mails Step-by-Step Workflow Container -->
+      <div id="sendMailsWorkflowContainer" style="display: none;">
+        
+        <!-- Stepper Navigation -->
+        <div class="workflow-stepper">
+          <div class="step-item active" data-step="1">
+            <div class="step-circle">1</div>
+            <div class="step-text">Sender Email</div>
+          </div>
+          <div class="step-divider"></div>
+          <div class="step-item" data-step="2">
+            <div class="step-circle">2</div>
+            <div class="step-text">Select Template</div>
+          </div>
+          <div class="step-divider"></div>
+          <div class="step-item" data-step="3">
+            <div class="step-circle">3</div>
+            <div class="step-text">Recipient List</div>
+          </div>
+          <div class="step-divider"></div>
+          <div class="step-item" data-step="4">
+            <div class="step-circle">4</div>
+            <div class="step-text">Preview & Next</div>
+          </div>
+          <div class="step-divider"></div>
+          <div class="step-item" data-step="5">
+            <div class="step-circle">5</div>
+            <div class="step-text">Dispatch</div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- WORKFLOW STEP 1: SELECT SENDER EMAIL           -->
+        <!-- ============================================== -->
+        <div class="workflow-step-pane active" id="step1SenderPane">
+          <div class="card">
+            <div class="card-title">
+              <div class="card-title-left">
+                <span>1. Select Sender Account</span>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="btn btn-outline btn-sm" id="btnConnectGoogleAccount">
+                  <span>➕</span> Google OAuth Sign-in
+                </button>
+                <button class="btn btn-primary btn-sm" id="btnOpenAppPasswordModal" style="background: #1e40af; border-color: #1e3a8a; font-weight: 600;">
+                  <span>🔑</span> Connect via App Password (For Vishnu / College Accounts)
+                </button>
+              </div>
+            </div>
+            
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+              Select the authorized account from which all emails in this outreach will be dispatched. Institutional accounts (<code>@vishnu.edu.in</code>) work best with a Google App Password.
+            </p>
+
+            <div class="sender-accounts-grid" id="senderAccountsList">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <div id="noAccountsWarning" style="display: none; padding: 20px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; text-align: center; margin-bottom: 20px;">
+              <div style="font-size: 14px; font-weight: 600; color: #92400e; margin-bottom: 6px;">No sender accounts connected yet</div>
+              <div style="font-size: 12px; color: #b45309; margin-bottom: 14px;">
+                Connect your Google Account via Google Sign-in or use a 16-character Google App Password (recommended for college accounts).
+              </div>
+              <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-outline btn-sm" id="btnConnectGoogleAccountPrompt">
+                  <span>➕</span> Google OAuth Sign-in
+                </button>
+                <button class="btn btn-primary btn-sm" id="btnOpenAppPasswordModalPrompt" style="background: #1e40af; border-color: #1e3a8a;">
+                  <span>🔑</span> Connect via App Password
+                </button>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <button class="btn btn-outline" id="btnExitWorkflow">Cancel & Exit</button>
+              <button class="btn btn-primary" id="btnStep1Next" disabled>
+                Proceed to Template Selection ➔
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- WORKFLOW STEP 2: SELECT EMAIL TEMPLATE         -->
+        <!-- ============================================== -->
+        <div class="workflow-step-pane" id="step2TemplatePane" style="display: none;">
+          <div class="card">
+            <div class="card-title">
+              <div class="card-title-left">
+                <span>2. Select Email Template</span>
+              </div>
+              <div style="font-size: 13px; color: var(--text-muted);" id="step2ActiveSenderBadge">
+                Sender: <strong>None selected</strong>
+              </div>
+            </div>
+
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+              Click the section below to open the template selection interface and choose the template for your email composition.
+            </p>
+
+            <!-- Clickable Selected Template Display Box -->
+            <div class="selected-template-box" id="templateSelectionTriggerBox">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="font-size: 32px;" id="selectedTemplateIcon">📄</div>
+                <div>
+                  <div style="font-size: 16px; font-weight: 700; color: #0f172a;" id="selectedTemplateNameDisplay">Click here to select an email template</div>
+                  <div style="font-size: 13px; color: var(--text-muted); margin-top: 2px;" id="selectedTemplateDescDisplay">Browse available templates in the application</div>
+                  <div style="margin-top: 6px; display: flex; gap: 6px;" id="selectedTemplateVariablesPills"></div>
+                </div>
+              </div>
+              <div>
+                <button class="btn btn-outline btn-sm" id="btnBrowseTemplates">
+                  <span>📂</span> Change Template
+                </button>
+              </div>
+            </div>
+
+            <!-- Subject Line Section -->
+            <div style="margin-top: 20px;">
+              <label class="form-label">Email Subject Line (Supports Merge Variables)</label>
+              <input type="text" class="form-control" id="workflowSubjectInput" placeholder="e.g. Exclusive Invitation: E-Summit 2026 for {{name}}">
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+                Available merge tags:
+                <div class="chips-container" id="workflowSubjectTags"></div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <button class="btn btn-outline" id="btnStep2Back">◀ Back to Sender</button>
+              <button class="btn btn-primary" id="btnStep2Next" disabled>
+                Proceed to Recipient List ➔
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- WORKFLOW STEP 3: RECIPIENT LIST                -->
+        <!-- ============================================== -->
+        <div class="workflow-step-pane" id="step3RecipientsPane" style="display: none;">
+          <div class="card">
+            <div class="card-title">
+              <div class="card-title-left">
+                <span>3. Enter and Manage Recipient List</span>
+              </div>
+              <div style="font-weight: 700; color: var(--primary);" id="workflowRecipientCount">
+                0 Total Recipients
+              </div>
+            </div>
+
+            <!-- Source Tabs: Outside, In-App, Associated -->
+            <div class="recipient-source-tabs">
+              <button class="source-tab-btn active" data-source="outside">
+                <span>📁</span> Outside Emails (CSV / Excel / Paste)
+              </button>
+              <button class="source-tab-btn" data-source="inapp">
+                <span>📥</span> Received in Application
+              </button>
+              <button class="source-tab-btn" data-source="associated">
+                <span>🔗</span> Associated with Specific Address
+              </button>
+            </div>
+
+            <!-- Panel 1: Outside Upload -->
+            <div class="source-subpane active" id="sourceOutsidePane">
+              <div class="dropzone" id="workflowRecipientDropzone" style="margin-bottom: 16px;">
+                <input type="file" id="workflowRecipientFileInput" accept=".csv,.xlsx,.xls,.txt">
+                <div class="dropzone-icon">📊</div>
+                <div class="dropzone-text">Drop your CSV / Excel recipient file here</div>
+                <div class="dropzone-subtext">Must contain an 'email' column. Columns like name, company become personalization tags.</div>
+              </div>
+              
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; color: var(--text-muted);">Or paste comma/newline separated emails:</span>
+                <button class="btn btn-outline btn-sm" id="btnLoad5SampleWorkflow">
+                  <span>⚡</span> Load 5 Sample Contacts
+                </button>
+              </div>
+
+              <div style="display: flex; gap: 8px; margin-top: 8px;">
+                <input type="text" class="form-control" id="workflowManualEmailInput" placeholder="Enter emails (e.g. founder@startup.com, partner@vc.org)">
+                <button class="btn btn-secondary btn-sm" id="btnAddManualEmail">Add</button>
+              </div>
+            </div>
+
+            <!-- Panel 2: In-App Received -->
+            <div class="source-subpane" id="sourceInAppPane" style="display: none;">
+              <div style="padding: 16px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px;">
+                <div style="font-size: 13px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Emails Collected Through Application</div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+                  These are verified emails received from forms, participant registrations, and inbound leads within the app.
+                </p>
+                <button class="btn btn-primary btn-sm" id="btnImportInAppRecipients">
+                  <span>📥</span> Import All In-App Registered Emails
+                </button>
+              </div>
+            </div>
+
+            <!-- Panel 3: Associated with Email/Domain -->
+            <div class="source-subpane" id="sourceAssociatedPane" style="display: none;">
+              <div style="padding: 16px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px;">
+                <div style="font-size: 13px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Filter & Associate by Specific Domain or Email Address</div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+                  Select contacts associated with a specific organization domain or email association.
+                </p>
+                <div style="display: flex; gap: 10px;">
+                  <input type="text" class="form-control" id="associationFilterInput" placeholder="e.g. ecell.org or startuparena.in">
+                  <button class="btn btn-secondary btn-sm" id="btnApplyAssociationFilter">Apply Filter</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Keyword & Column Index Mapping Interface (As Requested) -->
+            <div id="keywordMappingCard" style="margin-top: 18px; padding: 14px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
+                <div style="font-weight: 700; font-size: 13px; color: #0f172a; display: flex; align-items: center; gap: 6px;">
+                  <span>🔗</span> Keyword & Column Index Mapping
+                </div>
+                <div style="display: flex; gap: 6px;">
+                  <button type="button" class="btn btn-primary btn-sm" id="btnAutoMapByIndex" style="font-size: 11px; padding: 4px 10px;">
+                    ⚡ Auto-Map by Index (1st ➔ 1st, 2nd ➔ 2nd)
+                  </button>
+                  <button type="button" class="btn btn-outline btn-sm" id="btnAutoMapByName" style="font-size: 11px; padding: 4px 10px;">
+                    🏷️ Auto-Map by Name
+                  </button>
+                </div>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                Your template contains bracket keywords. Below, verify or choose which column from your entered details fills into each keyword:
+              </p>
+              <div id="keywordMappingGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px;">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Complete Recipient List Display Table -->
+            <div style="margin-top: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <div style="font-size: 14px; font-weight: 700; color: #0f172a;">
+                  Complete Recipient List Preview (<span id="completeListCount">0</span>)
+                </div>
+                <button class="btn btn-outline btn-sm" id="btnClearWorkflowRecipients" style="color: var(--danger); border-color: #fca5a5;">
+                  <span>🗑️</span> Clear List
+                </button>
+              </div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                💡 <em>Tip: Click <strong>✏️ Edit</strong> or double-click any row to customize that recipient's email address or template keywords before dispatch.</em>
+              </div>
+
+              <div class="table-responsive" style="max-height: 280px; overflow-x: auto; overflow-y: auto;">
+                <table class="custom-table" id="workflowRecipientsTable">
+                  <thead>
+                    <tr id="workflowRecipientsHeader">
+                      <th>#</th>
+                      <th>Email</th>
+                      <th>Name</th>
+                      <th>Organization</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="workflowRecipientsBody">
+                    <tr>
+                      <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">No recipients entered yet.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <button class="btn btn-outline" id="btnStep3Back">◀ Back to Template</button>
+              <button class="btn btn-primary" id="btnStep3Next" disabled>
+                Proceed to Individual Previews ➔
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- WORKFLOW STEP 4: EMAIL PREVIEW & SWIPE NEXT    -->
+        <!-- ============================================== -->
+        <div class="workflow-step-pane" id="step4PreviewPane" style="display: none;">
+          <div class="swipe-preview-wrapper">
+            
+            <!-- Preview Controls Bar -->
+            <div class="swipe-preview-header">
+              <div>
+                <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--primary);">
+                  Recipient <span id="swipeCurrentIndex">1</span> of <span id="swipeTotalCount">1</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 2px;">
+                  <span style="font-size: 15px; font-weight: 700; color: #0f172a;" id="swipeRecipientEmailDisplay">
+                    recipient@example.com
+                  </span>
+                  <button type="button" class="btn btn-outline btn-sm" id="btnEditCurrentPreviewRecipient" style="padding: 2px 8px; font-size: 11px; font-weight: 600; color: var(--primary); border-color: #93c5fd;" title="Edit this recipient's email, name, organization, or keywords">
+                    ✏️ Edit Details
+                  </button>
+                </div>
+              </div>
+
+              <!-- Swipe Navigation Next / Prev -->
+              <div class="swipe-nav-controls">
+                <button class="btn-swipe-prev" id="btnSwipePrev">
+                  ◀ Previous
+                </button>
+                <button class="btn-swipe-next" id="btnSwipeNext">
+                  Next Recipient ▶
+                </button>
+              </div>
+            </div>
+
+            <!-- Live Preview Direct Word & Text Editor Banner -->
+            <div style="padding: 10px 24px; background: #eff6ff; border-bottom: 1px solid #bfdbfe; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">✏️</span>
+                <div>
+                  <span style="font-weight: 700; font-size: 13px; color: #1e40af;">Direct Preview Editor:</span>
+                  <span style="font-size: 12px; color: #2563eb; margin-left: 4px;">Click anywhere in the subject or email body to change any word or line.</span>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #1e40af; cursor: pointer; margin: 0; background: #ffffff; padding: 5px 12px; border-radius: 6px; border: 1px solid #bfdbfe;" title="Toggle official email signature on or off">
+                  <input type="checkbox" id="step4SignatureToggle" checked> ✍️ Attach Signature
+                </label>
+                <span id="previewEditScopeBadge" style="display: none; background: #fef3c7; color: #92400e; font-weight: 600; padding: 4px 10px; border-radius: 12px; font-size: 11px; border: 1px solid #fde68a;">
+                  👤 This recipient only
+                </span>
+                <button type="button" id="btnApplyToCurrentRecipient" class="btn btn-outline btn-sm" style="font-size: 12px; font-weight: 600; padding: 5px 12px; color: #1e40af; border-color: #93c5fd; background: #ffffff;" title="Apply changes only to this individual recipient">
+                  👤 Apply to this recipient only
+                </button>
+                <button type="button" id="btnApplyToAllRecipients" class="btn btn-primary btn-sm" style="font-size: 12px; font-weight: 700; padding: 5px 14px; background: #4f46e5; border-color: #4338ca; color: #ffffff;" title="Apply this edited word/line across all recipients">
+                  🌐 Apply to ALL recipients
+                </button>
+              </div>
+            </div>
+
+            <!-- Preview Subject & Sender Info -->
+            <div style="padding: 14px 24px; background: #ffffff; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px;">
+              <div style="font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--text-muted); font-weight: 600; min-width: 65px;">From:</span>
+                <span id="previewSenderAccountText" style="color: #0f172a; font-weight: 600;">selected@gmail.com</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <label for="swipeSubjectInput" style="color: var(--text-muted); font-weight: 600; min-width: 65px; margin: 0; cursor: pointer;">Subject:</label>
+                <input type="text" id="swipeSubjectInput" class="form-control" style="font-weight: 700; font-size: 14px; color: #0f172a; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 12px; width: 100%; transition: border-color 0.2s;" placeholder="Subject line for this recipient (click to edit directly)..." title="Click to edit subject line directly">
+                <span id="swipeSubjectDisplay" style="display: none;"></span>
+              </div>
+            </div>
+
+            <!-- Rendered Email Body in Viewport (ContentEditable) -->
+            <div style="height: 490px; width: 100%; background: #ffffff; position: relative;">
+              <iframe id="swipeIframe" style="width: 100%; height: 100%; border: none;"></iframe>
+            </div>
+
+            <!-- Bottom Action Footer -->
+            <div style="padding: 16px 24px; background: #f8fafc; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <button class="btn btn-outline" id="btnStep4Back">◀ Back to Recipients</button>
+              <div style="font-size: 13px; color: var(--text-muted);">
+                Preview all recipients to enable final sending
+              </div>
+              <button class="btn btn-success" id="btnLaunchSendMailsFinal" style="display: none; padding: 10px 24px; font-weight: 700;">
+                <span>🚀</span> Confirm & Send Mails
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- WORKFLOW STEP 5: DISPATCH & LIVE PROGRESS      -->
+        <!-- ============================================== -->
+        <div class="workflow-step-pane" id="step5DispatchPane" style="display: none;">
+          <div class="card" style="box-shadow: var(--shadow-lg);">
+            <div class="progress-header">
+              <div>
+                <h3 style="font-size: 18px; font-weight: 700; color: #0f172a;" id="wfProgressTitle">Dispatching Emails via Gmail API...</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;" id="wfProgressSub">Sending from selected account</p>
+              </div>
+            </div>
+
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar-fill" id="wfProgressBarFill"></div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-box">
+                <div class="stat-val total" id="wfStatTotal">0</div>
+                <div class="stat-lbl">Recipients</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val sent" id="wfStatSent">0</div>
+                <div class="stat-lbl">Sent Successfully</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val failed" id="wfStatFailed">0</div>
+                <div class="stat-lbl">Failed</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val" id="wfStatPercentage">0%</div>
+                <div class="stat-lbl">Completed</div>
+              </div>
+            </div>
+
+            <!-- Error Status Display in Text Format (if any error occurs) -->
+            <div id="wfErrorStatusBox" style="display: none; margin-top: 20px; padding: 14px 18px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; color: #991b1b; font-weight: 700; font-size: 14px; margin-bottom: 4px;">
+                <span>⚠️</span> <span>error</span>
+              </div>
+              <div id="wfErrorStatusText" style="font-size: 13px; color: #b91c1c; line-height: 1.5; white-space: pre-wrap;"></div>
+            </div>
+
+            <div id="wfCompletedActions" style="display: none; margin-top: 20px; text-align: center;">
+              <button class="btn btn-primary" id="btnViewSentHistory">
+                <span>📊</span> View Campaign in History
+              </button>
+              <button class="btn btn-outline" id="btnStartNewCampaign" style="margin-left: 10px;">
+                <span>🚀</span> Send Another Campaign
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 2. TEMPLATE SCREEN                                       -->
+    <!-- ======================================================== -->
+    <section id="templatesView" class="tab-pane">
+      <div class="view-header">
+        <div>
+          <h2>Template Screen</h2>
+          <p>Upload HTML / text email templates, customize placeholders, or create new responsive designs.</p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <button class="btn btn-secondary" id="btnOpenUploadModal">
+            <span>📤</span> Upload Template File
+          </button>
+          <button class="btn btn-primary" id="btnOpenCreateModal">
+            <span>➕</span> Create New Template
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Upload Dropzone -->
+      <div class="dropzone" id="templateLibraryDropzone" style="margin-bottom: 24px;">
+        <input type="file" id="templateLibraryFileInput" accept=".html,.htm,.txt">
+        <div class="dropzone-icon">📄</div>
+        <div class="dropzone-text">Drag & drop your HTML or TXT template file here to upload</div>
+        <div class="dropzone-subtext">Automatically detects tags like {{name}}, {{company}}, {{email}}</div>
+      </div>
+
+      <!-- Templates Grid -->
+      <div class="template-grid" id="templatesContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 3. HISTORY SCREEN                                        -->
+    <!-- ======================================================== -->
+    <section id="historyView" class="tab-pane">
+      <div class="view-header">
+        <div>
+          <h2>History Screen</h2>
+          <p>Review past sent campaigns, recipient counts, and delivery analytics.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" id="btnClearHistoryBtn" style="color: var(--danger); border-color: #fca5a5;">
+          <span>🗑️</span> Clear All History
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table class="custom-table" id="historyTable">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Campaign ID</th>
+                <th>Template</th>
+                <th>Subject</th>
+                <th>Total</th>
+                <th>Sent</th>
+                <th>Failed</th>
+                <th>Provider / Account</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <tr>
+                <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 30px;">No campaigns sent yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 4. PROFILE SCREEN                                        -->
+    <!-- ======================================================== -->
+    <section id="profileView" class="tab-pane">
+      <div class="view-header">
+        <div>
+          <h2>Profile Screen</h2>
+          <p>Manage your sender identity, Google OAuth 2.0 configuration, and connected Gmail accounts.</p>
+        </div>
+        <button class="btn btn-primary" id="btnSaveProfile">
+          <span>💾</span> Save Profile & Credentials
+        </button>
+      </div>
+
+      <!-- User Profile Header Card -->
+      <div class="profile-card">
+        <div class="profile-avatar" id="profileAvatarCircle">EC</div>
+        <div class="profile-meta">
+          <h3 id="profileDisplayHeading">E-Cell Outreach Team</h3>
+          <p id="profileDisplaySub">Entrepreneurship Cell • team@ecell.org</p>
+          <div class="profile-badges">
+            <span class="badge badge-info" id="profileBadgeRole">Outreach Lead</span>
+            <span class="badge badge-success" id="profileBadgeProvider">Gmail API Active</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        
+        <!-- Column 1: Sender Identity -->
+        <div class="card">
+          <div class="card-title">Sender Identity</div>
+          
+          <div class="form-group">
+            <label class="form-label">Full Name / Sender Display Name</label>
+            <input type="text" class="form-control" id="profileFromName" placeholder="e.g. E-Cell Outreach Team">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Organization / College / Company</label>
+            <input type="text" class="form-control" id="profileOrganization" placeholder="e.g. Entrepreneurship Cell, IIT">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Role / Designation</label>
+            <input type="text" class="form-control" id="profileRole" placeholder="e.g. Head of Corporate Relations">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Sender Email Address</label>
+            <input type="email" class="form-control" id="profileFromEmail" placeholder="team@ecell.org">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Reply-To Email Address (Optional)</label>
+            <input type="email" class="form-control" id="profileReplyTo" placeholder="contact@ecell.org">
+          </div>
+        </div>
+
+        <!-- Column 2: Google OAuth 2.0 & Firebase Database Setup -->
+        <div class="card">
+          <div class="card-title">Google OAuth 2.0 Credentials (Gmail API)</div>
+          
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+            Required to connect Gmail accounts via OAuth with scope <code>https://www.googleapis.com/auth/gmail.send</code>.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Google Client ID</label>
+            <input type="text" class="form-control" id="oauthClientId" placeholder="e.g. 123456789-abcdef.apps.googleusercontent.com">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Google Client Secret</label>
+            <input type="password" class="form-control" id="oauthClientSecret" placeholder="Enter Client Secret">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Authorized Redirect URI (In Google Cloud Console)</label>
+            <input type="text" class="form-control" id="oauthRedirectUri" value="http://localhost:3000/api/auth/google/callback" readonly style="background: #f1f5f9;">
+          </div>
+
+          <!-- Connected Accounts List in Profile -->
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+            <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Connected Gmail Accounts</div>
+            <div id="profileConnectedAccountsList" style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Firebase Database Configuration -->
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div style="font-size: 13px; font-weight: 700; color: #0f172a;">Firebase Database Setup</div>
+              <span class="badge badge-info" id="firebaseStatusBadge">Local Datastore Active</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+              Upload your <code>serviceAccountKey.json</code> file or paste the JSON below to connect Firebase Firestore.
+            </p>
+            <div style="display: flex; gap: 8px;">
+              <input type="file" id="firebaseServiceAccountFileInput" accept=".json" style="font-size: 12px;">
+              <button class="btn btn-secondary btn-sm" id="btnUploadServiceAccount">Upload Key</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Default Gmail Signature (Auto-synced from Sender) -->
+        <div class="card" style="grid-column: 1 / -1; margin-top: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 20px;">✍️</span>
+              <div class="card-title" style="margin-bottom: 0;">Default Gmail Signature (Auto-Synced from Sender Mail)</div>
+            </div>
+            <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: #166534; background: #dcfce7; padding: 6px 14px; border-radius: 20px; border: 1px solid #bbf7d0; cursor: pointer;">
+              <input type="checkbox" id="profileIncludeSignatureToggle" checked> Automatically apply sender's default Gmail signature
+            </label>
+          </div>
+
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            Instead of manual images, E-Cell Mail Agent directly retrieves the <strong>official default signature</strong> configured in your sender Gmail account (including logos, credentials, and social links), and applies it automatically to every outgoing email.
+          </p>
+
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div style="font-size: 12px; font-weight: 700; color: #475569; text-transform: uppercase;">
+                Active Default Signature from Sender Account
+              </div>
+              <button type="button" class="btn btn-outline btn-sm" id="btnSyncGmailSignature" style="font-size: 12px; padding: 4px 12px;">
+                <span>🔄</span> Sync from Gmail Settings
+              </button>
+            </div>
+            <div id="profileSignatureHtmlPreview" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; min-height: 80px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow-x: auto;">
+              <div style="color: #64748b; font-size: 13px; font-style: italic;">Loading default signature from logged-in sender...</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: TEMPLATE SELECTION INTERFACE (AS SPECIFIED)       -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="templateSelectionModal">
+    <div class="modal-content" style="max-width: 850px;">
+      <div class="modal-header">
+        <div class="modal-title">Select Email Template</div>
+        <button class="modal-close" data-close-modal="templateSelectionModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          Choose from previously created templates or application templates. Each template displays its name and detected merge variables.
+        </p>
+
+        <div class="template-grid" id="modalTemplateSelectorGrid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" data-close-modal="templateSelectionModal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: CREATE / EDIT TEMPLATE (SIMPLIFIED & USER-FRIENDLY) -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="templateEditorModal">
+    <div class="modal-content" style="max-width: 760px;">
+      <div class="modal-header">
+        <div class="modal-title" id="editorModalTitle">Create Email Template</div>
+        <button class="modal-close" data-close-modal="templateEditorModal">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 16px;">
+        <input type="hidden" id="editTemplateId">
+        <input type="hidden" id="editTemplateFormat" value="html">
+
+        <!-- 1. Template Name -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700; font-size: 13px;">Template Name</label>
+          <input type="text" class="form-control" id="editTemplateName" placeholder="e.g. Workshop" style="font-size: 14px;">
+        </div>
+
+        <!-- 2. Email Subject Line -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700; font-size: 13px;">Default Subject Line</label>
+          <input type="text" class="form-control" id="editTemplateSubject" placeholder="e.g. Welcome to E-Summit. Congratulations on your selection, [name]" style="font-size: 14px;">
+        </div>
+
+        <!-- 3. Header Option (Simple) -->
+        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px;">
+          <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: #0f172a; cursor: pointer; margin-bottom: 8px;">
+            <input type="checkbox" id="editHeaderToggle" checked> Add Header Banner to Email
+          </label>
+          <div id="simpleHeaderInputs" style="display: flex; gap: 10px;">
+            <input type="text" class="form-control" id="editHeaderTitle" placeholder="Header Title (e.g. 🚀 Welcome to E-Summit 2026)" style="font-size: 13px; flex: 1;">
+            <input type="text" class="form-control" id="editHeaderSubtitle" placeholder="Header Subtitle (e.g. Official Invitation for [name])" style="font-size: 13px; flex: 1;">
+          </div>
+        </div>
+
+        <!-- 4. Selected Keywords (Only selected keywords shown, with ✕ option) -->
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="font-weight: 700; font-size: 13px; color: #1e40af;">
+              Selected Keywords
+            </div>
+            <span style="font-size: 11px; color: #3b82f6;">Click keyword to insert into message • Click ✕ to remove</span>
+          </div>
+
+          <!-- Active Selected Keyword Chips Container -->
+          <div class="chips-container" id="editorKeywordChips" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; min-height: 28px; align-items: center;">
+            <!-- Dynamically populated with selected keywords only -->
+          </div>
+
+          <!-- Add New Keyword Input -->
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" class="form-control" id="customKeywordInput" placeholder="Add custom keyword (e.g. roll_no, department_name, ticket)" style="font-size: 12px; padding: 6px 12px; background: #ffffff;">
+            <button type="button" class="btn btn-primary btn-sm" id="btnInsertCustomBracket" style="white-space: nowrap;">
+              + Add & Insert Keyword
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. Email Message Body with Text Selection Keyword Tool -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label class="form-label" style="font-weight: 700; font-size: 13px; margin-bottom: 0;">Email Message Body</label>
+            <span style="font-size: 11px; color: var(--primary); font-weight: 600;">
+              💡 Highlight any word below to convert it to a dynamic [keyword]
+            </span>
+          </div>
+
+          <div class="textarea-selection-wrapper" style="position: relative;">
+            <!-- Floating Selection Tooltip -->
+            <div id="selectionKeywordPopup" style="display: none; position: absolute; z-index: 100; top: 8px; right: 12px; background: #0f172a; color: #ffffff; padding: 6px 12px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); align-items: center; gap: 8px; font-size: 12px;">
+              <span>Selected: "<strong id="popupSelectedTextDisplay" style="color: #60a5fa; max-width: 140px; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom;"></strong>"</span>
+              <button type="button" class="btn btn-primary btn-sm" id="btnPopupTurnKeyword" style="padding: 4px 10px; font-size: 11px; font-weight: 700;">
+                ✨ Turn this as keyword
+              </button>
+              <button type="button" id="btnCloseSelectionPopup" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 13px; line-height: 1;">✕</button>
+            </div>
+
+            <!-- Inline Keyword Naming Box -->
+            <div id="inlineKeywordPrompt" style="display: none; position: absolute; z-index: 101; top: 8px; right: 12px; background: #ffffff; border: 2px solid #3b82f6; color: #0f172a; padding: 8px 12px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); align-items: center; gap: 8px; font-size: 12px;">
+              <span style="font-weight: 700; color: #1e40af;">Keyword:</span>
+              <div style="display: flex; align-items: center; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 4px; padding: 2px 6px;">
+                <span style="font-weight: 700; color: #3b82f6;">[</span>
+                <input type="text" id="inlineKeywordNameInput" placeholder="name" style="border: none; background: transparent; font-size: 12px; font-weight: 700; color: #1d4ed8; outline: none; width: 140px; padding: 2px 4px;">
+                <span style="font-weight: 700; color: #3b82f6;">]</span>
+              </div>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 11px; cursor: pointer; color: #475569;">
+                <input type="checkbox" id="inlineReplaceAllOccurrences" checked> Replace all matches
+              </label>
+              <button type="button" class="btn btn-primary btn-sm" id="btnApplyInlineKeyword" style="padding: 4px 10px; font-size: 11px; font-weight: 700;">
+                Apply
+              </button>
+              <button type="button" id="btnCancelInlineKeyword" style="background: none; border: none; color: #64748b; cursor: pointer; font-size: 13px;">✕</button>
+            </div>
+
+            <textarea class="form-control" id="editTemplateContent" style="min-height: 220px; font-size: 14px; line-height: 1.6;" placeholder="Type or paste your email message here... Select any word or phrase with your mouse, and click 'Turn this as keyword' above!"></textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" data-close-modal="templateEditorModal">Cancel</button>
+        <button class="btn btn-primary" id="btnSaveTemplateEditor" style="padding: 10px 24px;">Save Template</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: UPLOAD TEMPLATE FILE                              -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="templateUploadModal">
+    <div class="modal-content" style="max-width: 540px;">
+      <div class="modal-header">
+        <div class="modal-title">Upload Email Template</div>
+        <button class="modal-close" data-close-modal="templateUploadModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Template Display Name</label>
+          <input type="text" class="form-control" id="uploadModalName" placeholder="e.g. Sponsoring Prospectus">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject Line</label>
+          <input type="text" class="form-control" id="uploadModalSubject" placeholder="e.g. Partnering with {{company}}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Select File (.html or .txt)</label>
+          <input type="file" class="form-control" id="uploadModalFile" accept=".html,.htm,.txt">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" data-close-modal="templateUploadModal">Cancel</button>
+        <button class="btn btn-primary" id="btnConfirmUploadTemplate">Upload & Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: EDIT RECIPIENT DETAILS                            -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="editRecipientModal">
+    <div class="modal-content" style="max-width: 560px;">
+      <div class="modal-header">
+        <div class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+          <span>✏️ Edit Recipient Details</span>
+          <span class="badge" id="editRecipientIndexBadge" style="background: #e0e7ff; color: #4338ca; font-size: 11px;">#1</span>
+        </div>
+        <button class="modal-close" data-close-modal="editRecipientModal">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px;">
+        <input type="hidden" id="editRecipientIndexInput">
+
+        <!-- 1. Email Field -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700; font-size: 13px;">Email Address <span style="color: var(--danger);">*</span></label>
+          <input type="email" class="form-control" id="editRecipEmail" placeholder="recipient@example.com" style="font-size: 14px;">
+        </div>
+
+        <!-- 2. Dynamic Template Keywords Container (Keyword 1, Keyword 2, etc.) -->
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 14px;">
+          <div style="font-size: 12px; font-weight: 700; color: #1e40af; margin-bottom: 8px; text-transform: uppercase;">
+            Template Keywords (Auto-mapped or Custom Values)
+          </div>
+          <div id="editRecipDynamicKeywordsContainer" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Populated dynamically with each template keyword: Keyword #1: [name], Keyword #2: [department_name], etc. -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" data-close-modal="editRecipientModal">Cancel</button>
+        <button class="btn btn-primary" id="btnSaveEditRecipient">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: CONNECT GMAIL VIA APP PASSWORD                    -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="appPasswordModal">
+    <div class="modal-content" style="max-width: 580px;">
+      <div class="modal-header">
+        <div class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+          <span>🔑 Connect Account via Google App Password</span>
+        </div>
+        <button class="modal-close" data-close-modal="appPasswordModal">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #166534; line-height: 1.5;">
+          <strong>🎯 Recommended for College Accounts (<code>@vishnu.edu.in</code>)</strong><br>
+          College domains often block third-party OAuth apps from sending emails. A 16-character Google App Password connects directly to Gmail SMTP with 100% reliability and zero scope restrictions.
+        </div>
+
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #1e40af; line-height: 1.6;">
+          <strong>How to get your 16-character App Password (in 1 minute):</strong><br>
+          1. Open <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color: #2563eb; font-weight: 700; text-decoration: underline;">myaccount.google.com/apppasswords</a>.<br>
+          2. Enter App name: <code>ECell Agent</code> and click <strong>Create</strong>.<br>
+          3. Google will show a 16-letter password (e.g. <code>abcd efgh ijkl mnop</code>). Copy and paste it below.
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700; font-size: 13px;">Sender Email Address <span style="color: var(--danger);">*</span></label>
+          <input type="email" class="form-control" id="appPassEmail" placeholder="innovation@vishnu.edu.in" style="font-size: 14px;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700; font-size: 13px;">Sender Display Name</label>
+          <input type="text" class="form-control" id="appPassName" placeholder="Innovation VITB or E-Cell Core" style="font-size: 14px;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700; font-size: 13px;">16-Character Google App Password <span style="color: var(--danger);">*</span></label>
+          <input type="password" class="form-control" id="appPassPassword" placeholder="e.g. abcd efgh ijkl mnop" style="font-size: 14px; letter-spacing: 1px; font-family: monospace;">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" data-close-modal="appPasswordModal">Cancel</button>
+        <button class="btn btn-primary" id="btnSubmitAppPassword" style="background: #1e40af; border-color: #1e3a8a;">
+          <span>🚀</span> Verify & Connect Account
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: CAMPAIGN REPORT DETAILS                           -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="campaignReportModal">
+    <div class="modal-content" style="max-width: 800px;">
+      <div class="modal-header">
+        <div class="modal-title" id="reportModalTitle">Campaign Report</div>
+        <button class="modal-close" data-close-modal="campaignReportModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; gap: 16px; margin-bottom: 20px;">
+          <div class="stat-box" style="flex:1;">
+            <div class="stat-val total" id="reportTotal">0</div>
+            <div class="stat-lbl">Recipients</div>
+          </div>
+          <div class="stat-box" style="flex:1;">
+            <div class="stat-val sent" id="reportSent">0</div>
+            <div class="stat-lbl">Sent</div>
+          </div>
+          <div class="stat-box" style="flex:1;">
+            <div class="stat-val failed" id="reportFailed">0</div>
+            <div class="stat-lbl">Failed</div>
+          </div>
+        </div>
+
+        <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Recipient Status Breakdown:</div>
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+          <table class="custom-table" id="reportDetailTable">
+            <thead>
+              <tr>
+                <th>Recipient</th>
+                <th>Status</th>
+                <th>Subject</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="reportDetailBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-close-modal="campaignReportModal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: GOOGLE SIGN-IN SETUP                              -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="googleOAuthSetupModal">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <div class="modal-title">Sign in with Google Setup</div>
+        <button class="modal-close" data-close-modal="googleOAuthSetupModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          To connect your Gmail account via Google's official Sign-In page, enter your Google OAuth 2.0 Client credentials:
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">Google Client ID</label>
+          <input type="text" class="form-control" id="modalOauthClientId" placeholder="e.g. 123456789-abcdef.apps.googleusercontent.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Google Client Secret</label>
+          <input type="password" class="form-control" id="modalOauthClientSecret" placeholder="Enter Google Client Secret">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Authorized Redirect URI (In Google Cloud Console)</label>
+          <input type="text" class="form-control" value="http://localhost:3000/api/auth/google/callback" readonly style="background: #f1f5f9;">
+        </div>
+
+        <div style="font-size: 12px; background: #eff6ff; border-left: 3px solid var(--info); padding: 10px 14px; border-radius: 6px; margin-top: 10px;">
+          <strong>Quick Google Cloud Setup:</strong>
+          <ol style="margin-left: 18px; margin-top: 4px; line-height: 1.5;">
+            <li>Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Google Cloud Console</a>.</li>
+            <li>Enable <strong>Gmail API</strong>.</li>
+            <li>Create OAuth 2.0 Web Client with redirect URI: <code>http://localhost:3000/api/auth/google/callback</code>.</li>
+            <li>Paste your Client ID & Secret above and click <strong>"Save & Sign in with Google"</strong>.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" data-close-modal="googleOAuthSetupModal">Cancel</button>
+        <button class="btn btn-primary" id="btnSaveAndLaunchGoogleOAuth">Save & Sign in with Google</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+
+  <!-- App Script -->
+  <script src="js/app.js?v=2.8.0"></script>
+</body>
+</html>
